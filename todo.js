@@ -1,5 +1,7 @@
 // Todo card, it exists in a project, contains, only essential info
 import { openTodoForm } from "./form.js";
+import { createNewBtn } from "./buttons.js";
+import { mod } from "./index.js";
 
 const todoCard = (todo) => {
   const card = document.createElement("div");
@@ -19,6 +21,7 @@ const todoCard = (todo) => {
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
+  checkbox.classList.add("form-check-input");
   checkbox.checked = todo.checked;
   checkbox.addEventListener(
     "change",
@@ -34,16 +37,6 @@ const todoWindow = (project, todo) => {
   const popup = document.createElement("div");
   popup.classList.add("popup");
 
-  const closeBtn = document.createElement("button");
-  closeBtn.classList.add("close-button");
-  closeBtn.innerHTML = "&times;";
-  closeBtn.addEventListener("click", () => document.body.removeChild(popup));
-  popup.appendChild(closeBtn);
-
-  const title = document.createElement("h3");
-  title.textContent = todo.title;
-  popup.appendChild(title);
-
   const description = document.createElement("p");
   description.textContent = `Description: ${todo.description}`;
   popup.appendChild(description);
@@ -58,13 +51,19 @@ const todoWindow = (project, todo) => {
 
   const editButton = document.createElement("button");
   editButton.textContent = "Edit";
+  editButton.classList.add("btn", "btn-primary");
+  // editButton.removeAttribute("data-bs-toggle");
+  // editButton.removeAttribute("data-bs-target");
+  // editButton.setAttribute("data-bs-dismiss", "modal");
   editButton.addEventListener("click", () => {
     openTodoForm(project, todo);
-    document.body.removeChild(popup);
   });
   popup.appendChild(editButton);
 
-  document.body.appendChild(popup);
+  const title = mod.querySelector(".modal-title");
+  title.textContent = todo.title;
+  const body = mod.querySelector(".modal-body");
+  body.append(popup);
 };
 
 export { todoCard, todoWindow };

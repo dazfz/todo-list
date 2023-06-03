@@ -1,6 +1,8 @@
 import { Project } from "./classes.js";
 import { projectPage, projectCard } from "./project.js";
 import { openProjectForm } from "./form.js";
+import { createNewBtn } from "./buttons.js";
+import modal from "./modal.js";
 
 window.addEventListener("beforeunload", function () {
   localStorage.setItem("projects", JSON.stringify(projects));
@@ -28,9 +30,7 @@ goBackBtn.addEventListener("click", () =>
 const showAllProjects = (projects) => {
   const main = document.querySelector("main");
   main.innerHTML = "";
-  const addButton = document.createElement("button");
-  addButton.classList.add("add");
-  addButton.textContent = "+";
+  const addButton = createNewBtn();
   addButton.addEventListener("click", () => openProjectForm(projects));
   main.appendChild(addButton);
 
@@ -50,6 +50,15 @@ const showAllProjects = (projects) => {
 const showAllBtn = document.querySelector("#showAll");
 showAllBtn.addEventListener("click", () => showAllProjects(projects));
 
+const mod = modal();
+mod.addEventListener("hidden.bs.modal", () => {
+  const modalBody = document.querySelector(".modal-body");
+  while (modalBody.firstChild) {
+    modalBody.removeChild(modalBody.firstChild);
+  }
+});
+document.body.appendChild(mod);
+
 projectPage(projects[0]);
 
-export { projects, showAllProjects, nullCurrent };
+export { projects, showAllProjects, nullCurrent,mod };

@@ -1,21 +1,14 @@
 import { Todo, Project } from "./classes.js";
-import { showAllProjects } from "./index.js";
+import { showAllProjects, mod } from "./index.js";
 import { projectPage } from "./project.js";
 import { todoWindow } from "./todo.js";
+import { createSubmitBtn } from "./buttons.js";
 
 const openTodoForm = (project, todo) => {
-  const popup = document.createElement("div");
-  popup.classList.add("popup");
-
-  const closeBtn = document.createElement("button");
-  closeBtn.classList.add("close-button");
-  closeBtn.innerHTML = "&times;";
-  closeBtn.addEventListener("click", () => {
-    document.body.removeChild(popup);
-    projectPage(project);
-  });
-  popup.appendChild(closeBtn);
-
+  const modalBody = document.querySelector(".modal-body");
+  while (modalBody.firstChild) {
+    modalBody.removeChild(modalBody.firstChild);
+  }
   const form = document.createElement("form");
 
   const titleLbl = document.createElement("label");
@@ -61,10 +54,8 @@ const openTodoForm = (project, todo) => {
   priorityLbl.appendChild(prioritySelect);
   form.appendChild(priorityLbl);
 
-  const submitBtn = document.createElement("button");
-  submitBtn.type = "submit";
+  const submitBtn = createSubmitBtn();
   submitBtn.textContent = todo ? "Update" : "Add"; // Change button text based on editing or creating
-  submitBtn.classList.add("add");
   form.appendChild(submitBtn);
 
   // Handle form submission
@@ -86,26 +77,16 @@ const openTodoForm = (project, todo) => {
       );
       project.todos.push(newTodo);
     }
-
     projectPage(project);
-
-    document.body.removeChild(popup);
   });
 
-  popup.append(form);
-  document.body.append(popup);
+  const title = mod.querySelector(".modal-title");
+  title.textContent = todo ? todo.title : "New Todo";
+  const body = mod.querySelector(".modal-body");
+  body.append(form);
 };
 
 const openProjectForm = (projects) => {
-  const popup = document.createElement("div");
-  popup.classList.add("popup");
-
-  const closeBtn = document.createElement("button");
-  closeBtn.classList.add("close-button");
-  closeBtn.innerHTML = "&times;";
-  closeBtn.addEventListener("click", () => document.body.removeChild(popup));
-  popup.appendChild(closeBtn);
-
   const form = document.createElement("form");
 
   const titleLbl = document.createElement("label");
@@ -115,9 +96,7 @@ const openProjectForm = (projects) => {
   titleLbl.appendChild(titleInpt);
   form.appendChild(titleLbl);
 
-  const submitBtn = document.createElement("button");
-  submitBtn.type = "submit";
-  submitBtn.textContent = "Add";
+  const submitBtn = createSubmitBtn();
   form.appendChild(submitBtn);
 
   // Handle form submission
@@ -126,11 +105,12 @@ const openProjectForm = (projects) => {
     const newProject = new Project(titleInpt.value);
     projects.push(newProject);
     showAllProjects(projects);
-    document.body.removeChild(popup);
   });
 
-  popup.append(form);
-  document.body.append(popup);
+  const title = mod.querySelector(".modal-title");
+  title.textContent = "New Project";
+  const body = mod.querySelector(".modal-body");
+  body.append(form);
 };
 
 export { openTodoForm, openProjectForm };

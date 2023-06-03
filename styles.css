@@ -1,21 +1,20 @@
 /*MAIN CONTAINER*/
-
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 * {
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: "Nunito", sans-serif;
 }
+
 body {
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: #222;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .mainContainer {
-  width: 600px;
+  min-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,42 +33,11 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
   padding: 15px;
   border-bottom: 1px solid #555;
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-/*BUTTONS*/
-button {
-  background-color: #3498db;
-  color: #fff;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  margin-right: 15px;
-  border-radius: 5px;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
-}
-nav button:hover {
-  background-color: #2980b9;
-}
-.add {
-  background-color: #27ae60;
-  font-size: 15px;
-}
-.add:hover {
-  background-color: #1e8449;
-}
-.delete {
-  background-color: #c0392b;
-  font-size: 15px;
-}
-.delete:hover {
-  background-color: #a93226;
 }
 
 /*CARD VIEW*/
@@ -99,32 +67,16 @@ nav button:hover {
 /*CHECKBOX*/
 .card input[type="checkbox"] {
   margin-left: auto;
-  appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background-color: #222;
-  border: 2px solid #fff;
-  cursor: pointer;
+  border: 2px solid #222;
   margin-right: 15px;
 }
-.card input[type="checkbox"]:checked {
-  background-color: #fff;
-}
-.card input[type="checkbox"]::before {
-  content: "✓";
-  display: block;
-  text-align: center;
-  background-color: #fff;
-  border-radius: 50%;
-  opacity: 0;
-  transform: scale(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.card input[type="checkbox"]:checked::before {
-  opacity: 1;
-  transform: scale(1);
-}
+
+
+
+
 
 /*PROJECT HEADER*/
 
@@ -144,23 +96,6 @@ nav button:hover {
   margin: 0;
 }
 
-/*POPUP FORM*/
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  height: 70%;
-  max-width: 600px;
-  max-height: 90%;
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-}
 
 form {
   margin-top: 20px;
@@ -173,27 +108,3 @@ form {
   width: 100%;
 }
 
-.popup input[type="text"],
-.popup input[type="date"],
-.popup select {
-  padding: 12px;
-  font-size: 18px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.popup .close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border: none;
-  font-size: 40px;
-  cursor: pointer;
-}
-
-.popup .close-button:hover {
-  color: #f44336;
-}
