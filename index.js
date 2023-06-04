@@ -30,7 +30,7 @@ goBackBtn.addEventListener("click", () =>
 const showAllProjects = (projects) => {
   const main = document.querySelector("main");
   main.innerHTML = "";
-  
+
   const projectList = document.createElement("ul");
   projectList.classList.add("list-group");
   projects.forEach((project) => {
@@ -44,7 +44,7 @@ const showAllProjects = (projects) => {
   main.appendChild(projectList);
 
   const addButton = createNewBtn();
-  addButton.classList.add("new","rounded-circle","btn-lg");
+  addButton.classList.add("new", "rounded-circle", "btn-lg");
   addButton.addEventListener("click", () => openProjectForm(projects));
   main.appendChild(addButton);
 };
@@ -63,4 +63,4 @@ document.body.appendChild(mod);
 
 projectPage(projects[0]);
 
-export { projects, showAllProjects, nullCurrent,mod };
+export { projects, showAllProjects, nullCurrent, mod };

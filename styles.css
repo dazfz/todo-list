@@ -4,22 +4,12 @@
   font-family: "Nunito", sans-serif;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .mainContainer {
+  margin: 20px auto;
   width: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
 }
 main {
-  width: 100%;
   padding: 30px;
 }
 

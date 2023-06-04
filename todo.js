@@ -16,11 +16,9 @@ const todoCard = (todo) => {
 
   const title = document.createElement("h3");
   title.textContent = todo.title;
-  title.style.overflow = "hidden";
-  title.style.whiteSpace = "nowrap";
-  title.style.textOverflow = "ellipsis";
   title.style.maxWidth = "85%";
   title.classList.add("card-title");
+  title.classList.add("text-truncate");
   body.appendChild(title);
 
   const checkbox = document.createElement("input");
@@ -43,19 +41,22 @@ const todoWindow = (project, todo) => {
   popup.classList.add("popup");
 
   const description = document.createElement("p");
+  description.classList.add("mb-2");
   description.textContent = `Description: ${todo.description}`;
   popup.appendChild(description);
 
   const dueDate = document.createElement("p");
+  dueDate.classList.add("mb-2");
   dueDate.textContent = `Due Date: ${todo.dueDate}`;
   popup.appendChild(dueDate);
 
   const priority = document.createElement("p");
+  priority.classList.add("mb-4");
   priority.textContent = `Priority: ${todo.priority}`;
   popup.appendChild(priority);
 
   const editButton = document.createElement("button");
-  editButton.textContent = "Edit";
+  editButton.innerHTML = 'Edit <i class="bi bi-pencil-square"></i>';
   editButton.classList.add("btn", "btn-primary");
   editButton.addEventListener("click", () => {
     openTodoForm(project, todo);
@@ -64,6 +65,7 @@ const todoWindow = (project, todo) => {
 
   const title = mod.querySelector(".modal-title");
   title.textContent = todo.title;
+  title.style.overflow = "auto";
   const body = mod.querySelector(".modal-body");
   body.append(popup);
 };

@@ -8,14 +8,15 @@ const projectPage = (project) => {
   main.innerHTML = "";
 
   const header = document.createElement("div");
-  header.classList.add("project-header");
+  header.classList.add("project-header", "d-flex", "justify-content-between");
 
   const title = document.createElement("h2");
   title.textContent = project.name;
   header.appendChild(title);
 
-  const deleteTodoBtn = createDeleteBtn();
+  const deleteTodoBtn = document.createElement("button");
   deleteTodoBtn.innerHTML = "Delete Project";
+  deleteTodoBtn.classList.add("btn", "btn-danger");
   deleteTodoBtn.addEventListener("click", () => {
     const projectIndex = projects.indexOf(project);
     if (projectIndex !== -1) {
@@ -27,11 +28,9 @@ const projectPage = (project) => {
   header.appendChild(deleteTodoBtn);
 
   const todoList = document.createElement("div");
-  //todoList.classList.add("list-group");
 
   project.todos.forEach((todo) => {
     const todoCardElement = todoCard(todo);
-    //todoCardElement.classList.add("list-group-item");
 
     const buttonGroup = document.createElement("div");
     buttonGroup.classList.add("btn-group");
