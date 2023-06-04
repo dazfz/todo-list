@@ -12,6 +12,8 @@ const projectPage = (project) => {
 
   const title = document.createElement("h2");
   title.textContent = project.name;
+  title.style.maxWidth = "60%";
+  title.classList.add("text-truncate");
   header.appendChild(title);
 
   const deleteTodoBtn = document.createElement("button");
@@ -89,6 +91,7 @@ const projectCard = (project) => {
 
   const title = document.createElement("h2");
   title.textContent = project.name;
+  title.classList.add("text-truncate");
   card.appendChild(title);
 
   const todoCount = document.createElement("p");
