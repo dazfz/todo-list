@@ -15,7 +15,7 @@ const projectPage = (project) => {
   header.appendChild(title);
 
   const deleteTodoBtn = createDeleteBtn();
-  deleteTodoBtn.innerHTML = 'Delete Project <i class="bi bi-trash"></i>';
+  deleteTodoBtn.innerHTML = "Delete Project";
   deleteTodoBtn.addEventListener("click", () => {
     const projectIndex = projects.indexOf(project);
     if (projectIndex !== -1) {
@@ -26,24 +26,34 @@ const projectPage = (project) => {
   });
   header.appendChild(deleteTodoBtn);
 
-  const newBtn = createNewBtn();
-  newBtn.addEventListener("click", () => openTodoForm(project, null));
-  header.appendChild(newBtn);
-
   const todoList = document.createElement("div");
   todoList.classList.add("list");
 
   project.todos.forEach((todo) => {
     const todoCardElement = todoCard(todo);
 
+    const buttonGroup = document.createElement("div");
+    buttonGroup.classList.add("btn-group");
+
     const detailBtn = createNewBtn();
-    detailBtn.innerHTML = '<i class="bi bi-zoom-in"></i>';
+    detailBtn.classList.remove("btn-primary");
+    detailBtn.classList.add("btn-outline-primary");
+    detailBtn.innerHTML = '<i class="bi bi-info-circle-fill"></i>';
     detailBtn.addEventListener("click", () => {
       todoWindow(project, todo);
     });
-    todoCardElement.appendChild(detailBtn);
+
+    const editBtn = createNewBtn();
+    editBtn.classList.remove("btn-primary");
+    editBtn.classList.add("btn-outline-primary");
+    editBtn.innerHTML = '<i class="bi bi-pencil-square"></i>';
+    editBtn.addEventListener("click", () => {
+      openTodoForm(project, todo);
+    });
 
     const deleteBtn = createDeleteBtn();
+    deleteBtn.classList.remove("btn-danger");
+    deleteBtn.classList.add("btn-outline-danger");
     deleteBtn.addEventListener("click", () => {
       event.stopPropagation(); // Stop the click event from propagating to the todoCardElement
       const todoIndex = project.todos.indexOf(todo);
@@ -52,12 +62,21 @@ const projectPage = (project) => {
       todoList.removeChild(todoCardElement);
     });
 
-    todoCardElement.appendChild(deleteBtn);
+    buttonGroup.appendChild(detailBtn);
+    buttonGroup.appendChild(editBtn);
+    buttonGroup.appendChild(deleteBtn);
+    buttonGroup.setAttribute("role", "group");
+    todoCardElement.appendChild(buttonGroup);
     todoList.appendChild(todoCardElement);
   });
 
+  const newBtn = createNewBtn();
+  newBtn.classList.add("new","rounded-circle","btn-lg");
+  newBtn.addEventListener("click", () => openTodoForm(project, null));
+
   main.appendChild(header);
   main.appendChild(todoList);
+  main.appendChild(newBtn);
 };
 
 const projectCard = (project) => {

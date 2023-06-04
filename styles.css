@@ -28,6 +28,17 @@ main {
   padding: 30px;
 }
 
+.new {
+  position: sticky;
+  bottom: 20px;
+  z-index: 100;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 nav {
   width: 100%;
   display: flex;
@@ -52,18 +63,6 @@ nav {
   margin-bottom: 15px;
 }
 
-.card h3 {
-  font-size: 18px;
-  margin-right: 10px;
-}
-.card h2 {
-  margin-right: 10px;
-}
-.card p {
-  font-size: 14px;
-  margin-right: 10px;
-}
-
 /*CHECKBOX*/
 .card input[type="checkbox"] {
   margin-left: auto;
@@ -73,38 +72,3 @@ nav {
   border: 2px solid #222;
   margin-right: 15px;
 }
-
-
-
-
-
-/*PROJECT HEADER*/
-
-.project-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
-}
-
-.project-header h2 {
-  color: #fff;
-  font-size: 24px;
-  margin: 0;
-}
-
-
-form {
-  margin-top: 20px;
-}
-.popup label {
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-  margin-bottom: 10px;
-  width: 100%;
-}
-

@@ -1,6 +1,5 @@
 // Todo card, it exists in a project, contains, only essential info
 import { openTodoForm } from "./form.js";
-import { createNewBtn } from "./buttons.js";
 import { mod } from "./index.js";
 
 const todoCard = (todo) => {
@@ -52,9 +51,6 @@ const todoWindow = (project, todo) => {
   const editButton = document.createElement("button");
   editButton.textContent = "Edit";
   editButton.classList.add("btn", "btn-primary");
-  // editButton.removeAttribute("data-bs-toggle");
-  // editButton.removeAttribute("data-bs-target");
-  // editButton.setAttribute("data-bs-dismiss", "modal");
   editButton.addEventListener("click", () => {
     openTodoForm(project, todo);
   });

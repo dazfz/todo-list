@@ -9,35 +9,45 @@ const openTodoForm = (project, todo) => {
   while (modalBody.firstChild) {
     modalBody.removeChild(modalBody.firstChild);
   }
+
   const form = document.createElement("form");
 
   const titleLbl = document.createElement("label");
+  titleLbl.classList.add("form-label", "form-control-lg");
   titleLbl.textContent = "Title:";
   const titleInpt = document.createElement("input");
+  titleInpt.classList.add("form-control", "form-control-lg");
   titleInpt.type = "text";
   titleInpt.value = todo ? todo.title : ""; // Populate with existing value if available
   titleLbl.appendChild(titleInpt);
   form.appendChild(titleLbl);
 
   const descLbl = document.createElement("label");
+  descLbl.classList.add("form-label","form-control-lg");
   descLbl.textContent = "Description:";
-  const descInpt = document.createElement("input");
-  descInpt.type = "text";
+  const descInpt = document.createElement("textarea");
+  descInpt.classList.add("form-control", "form-control-lg");
   descInpt.value = todo ? todo.description : ""; // Populate with existing value if available
   descLbl.appendChild(descInpt);
   form.appendChild(descLbl);
 
   const dueDateLbl = document.createElement("label");
   dueDateLbl.textContent = "Due Date:";
+  dueDateLbl.classList.add("form-label","form-control-lg");
   const dueDateInpt = document.createElement("input");
+  dueDateInpt.classList.add("form-control", "form-control-lg");
   dueDateInpt.type = "date";
   dueDateInpt.value = todo ? todo.dueDate : ""; // Populate with existing value if available
   dueDateLbl.appendChild(dueDateInpt);
   form.appendChild(dueDateLbl);
 
+  // Dropdown
   const priorityLbl = document.createElement("label");
+  priorityLbl.classList.add("form-label","form-control-lg");
   priorityLbl.textContent = "Priority:";
   const prioritySelect = document.createElement("select");
+  prioritySelect.classList.add("form-select", "form-select-lg");
+  
   const lowOption = document.createElement("option");
   lowOption.value = "low";
   lowOption.textContent = "Low";
@@ -90,8 +100,10 @@ const openProjectForm = (projects) => {
   const form = document.createElement("form");
 
   const titleLbl = document.createElement("label");
+  titleLbl.classList.add("form-label", "form-control-lg");
   titleLbl.textContent = "Title:";
   const titleInpt = document.createElement("input");
+  titleInpt.classList.add("form-control", "form-control-lg");
   titleInpt.type = "text";
   titleLbl.appendChild(titleInpt);
   form.appendChild(titleLbl);

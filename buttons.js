@@ -8,7 +8,7 @@ const createCloseBtn = () => {
 
 const createSubmitBtn = () => {
   const submitBtn = document.createElement("button");
-  submitBtn.classList.add("btn", "btn-success");
+  submitBtn.classList.add("btn", "btn-success","btn-lg");
   submitBtn.type = "submit";
   submitBtn.textContent = "Add";
   submitBtn.setAttribute("data-bs-dismiss", "modal");
@@ -17,7 +17,7 @@ const createSubmitBtn = () => {
 
 const createNewBtn = () => {
   const newBtn = document.createElement("button");
-  newBtn.innerHTML = "New";
+  newBtn.innerHTML = "+";
   newBtn.classList.add("btn", "btn-primary");
   newBtn.setAttribute("data-bs-toggle", "modal");
   newBtn.setAttribute("data-bs-target", "#modal");
