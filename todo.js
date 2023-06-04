@@ -7,8 +7,15 @@ const todoCard = (todo) => {
   card.classList.add("card", "my-3");
 
   const date = document.createElement("p");
-  date.classList.add("card-header");
-  date.textContent = todo.dueDate ? `Expires: ${todo.dueDate}` : "No time limit";
+  date.classList.add(
+    "card-header",
+    "lead",
+    "d-flex",
+    "justify-content-between"
+  );
+  date.textContent = todo.dueDate
+    ? `Expires: ${todo.dueDate}`
+    : "No time limit";
   card.appendChild(date);
 
   const body = document.createElement("div");

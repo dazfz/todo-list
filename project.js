@@ -37,7 +37,7 @@ const projectPage = (project) => {
 
     const detailBtn = createNewBtn();
     detailBtn.classList.remove("btn-primary");
-    detailBtn.classList.add("btn-outline-primary");
+    detailBtn.classList.add("btn-outline-primary", "btn-sm");
     detailBtn.innerHTML = '<i class="bi bi-info-circle-fill"></i>';
     detailBtn.addEventListener("click", () => {
       todoWindow(project, todo);
@@ -45,7 +45,7 @@ const projectPage = (project) => {
 
     const editBtn = createNewBtn();
     editBtn.classList.remove("btn-primary");
-    editBtn.classList.add("btn-outline-primary");
+    editBtn.classList.add("btn-outline-primary", "btn-sm");
     editBtn.innerHTML = '<i class="bi bi-pencil-square"></i>';
     editBtn.addEventListener("click", () => {
       openTodoForm(project, todo);
@@ -53,7 +53,7 @@ const projectPage = (project) => {
 
     const deleteBtn = createDeleteBtn();
     deleteBtn.classList.remove("btn-danger");
-    deleteBtn.classList.add("btn-outline-danger");
+    deleteBtn.classList.add("btn-outline-primary", "btn-sm");
     deleteBtn.addEventListener("click", () => {
       event.stopPropagation(); // Stop the click event from propagating to the todoCardElement
       const todoIndex = project.todos.indexOf(todo);
@@ -66,7 +66,11 @@ const projectPage = (project) => {
     buttonGroup.appendChild(editBtn);
     buttonGroup.appendChild(deleteBtn);
     buttonGroup.setAttribute("role", "group");
-    todoCardElement.appendChild(buttonGroup);
+
+    const date = todoCardElement.querySelector(".card-header");
+    date.appendChild(buttonGroup);
+
+    todoCardElement.insertBefore(date, todoCardElement.firstChild);
     todoList.appendChild(todoCardElement);
   });
 

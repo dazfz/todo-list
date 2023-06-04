@@ -8,7 +8,7 @@ const createCloseBtn = () => {
 
 const createSubmitBtn = () => {
   const submitBtn = document.createElement("button");
-  submitBtn.classList.add("btn", "btn-success","btn-lg");
+  submitBtn.classList.add("btn", "btn-success", "btn-lg");
   submitBtn.type = "submit";
   submitBtn.textContent = "Add";
   submitBtn.setAttribute("data-bs-dismiss", "modal");
