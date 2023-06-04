@@ -27,10 +27,11 @@ const projectPage = (project) => {
   header.appendChild(deleteTodoBtn);
 
   const todoList = document.createElement("div");
-  todoList.classList.add("list");
+  //todoList.classList.add("list-group");
 
   project.todos.forEach((todo) => {
     const todoCardElement = todoCard(todo);
+    //todoCardElement.classList.add("list-group-item");
 
     const buttonGroup = document.createElement("div");
     buttonGroup.classList.add("btn-group");
@@ -71,7 +72,7 @@ const projectPage = (project) => {
   });
 
   const newBtn = createNewBtn();
-  newBtn.classList.add("new","rounded-circle","btn-lg");
+  newBtn.classList.add("new", "rounded-circle", "btn-lg");
   newBtn.addEventListener("click", () => openTodoForm(project, null));
 
   main.appendChild(header);
@@ -80,8 +81,8 @@ const projectPage = (project) => {
 };
 
 const projectCard = (project) => {
-  const card = document.createElement("div");
-  card.classList.add("card");
+  const card = document.createElement("li");
+  card.classList.add("list-group-item");
 
   const title = document.createElement("h2");
   title.textContent = project.name;
@@ -89,6 +90,7 @@ const projectCard = (project) => {
 
   const todoCount = document.createElement("p");
   todoCount.textContent = `To-do's: ${project.todos.length}`;
+  todoCount.classList.add("lead");
   card.appendChild(todoCount);
 
   return card;

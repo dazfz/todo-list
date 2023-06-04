@@ -4,19 +4,24 @@ import { mod } from "./index.js";
 
 const todoCard = (todo) => {
   const card = document.createElement("div");
-  card.classList.add("card");
+  card.classList.add("card", "my-3");
+
+  const date = document.createElement("p");
+  date.classList.add("card-header");
+  date.textContent = todo.dueDate ? `Expires: ${todo.dueDate}` : "No time limit";
+  card.appendChild(date);
+
+  const body = document.createElement("div");
+  body.classList.add("card-body", "d-flex", "justify-content-between");
 
   const title = document.createElement("h3");
   title.textContent = todo.title;
-  card.appendChild(title);
-
-  const date = document.createElement("p");
-  date.textContent = todo.dueDate;
-  card.appendChild(date);
-
-  const priority = document.createElement("p");
-  priority.textContent = todo.priority;
-  card.appendChild(priority);
+  title.style.overflow = "hidden";
+  title.style.whiteSpace = "nowrap";
+  title.style.textOverflow = "ellipsis";
+  title.style.maxWidth = "85%";
+  title.classList.add("card-title");
+  body.appendChild(title);
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -26,8 +31,9 @@ const todoCard = (todo) => {
     "change",
     (event) => (todo.checked = event.target.checked)
   );
-  card.appendChild(checkbox);
+  body.appendChild(checkbox);
 
+  card.appendChild(body);
   return card;
 };
 

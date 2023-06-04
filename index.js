@@ -31,8 +31,8 @@ const showAllProjects = (projects) => {
   const main = document.querySelector("main");
   main.innerHTML = "";
   
-  const projectList = document.createElement("div");
-  projectList.classList.add("list");
+  const projectList = document.createElement("ul");
+  projectList.classList.add("list-group");
   projects.forEach((project) => {
     const card = projectCard(project);
     card.addEventListener("click", () => {
