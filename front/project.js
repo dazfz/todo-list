@@ -1,6 +1,12 @@
 import { todoCard, todoWindow } from "./todo.js";
 import { openTodoForm } from "./form.js";
-import { projects, showAllProjects, nullCurrent } from "./index.js";
+import {
+  projects,
+  showAllProjects,
+  nullCurrent,
+  deleteProjectOnBackend,
+  deleteTodoOnBackend,
+} from "./index.js";
 import { createNewBtn, createDeleteBtn } from "./buttons.js";
 
 const projectPage = (project) => {
@@ -19,12 +25,19 @@ const projectPage = (project) => {
   const deleteTodoBtn = document.createElement("button");
   deleteTodoBtn.innerHTML = "Delete Project";
   deleteTodoBtn.classList.add("btn", "btn-danger");
-  deleteTodoBtn.addEventListener("click", () => {
+  deleteTodoBtn.addEventListener("click", async () => {
     const projectIndex = projects.indexOf(project);
     if (projectIndex !== -1) {
-      projects.splice(projectIndex, 1);
-      nullCurrent();
-      showAllProjects(projects);
+      const deleted = await deleteProjectOnBackend(project.id);
+      if (deleted) {
+        projects.splice(projectIndex, 1);
+        nullCurrent();
+        showAllProjects(projects);
+      } else {
+        alert(
+          "No se pudo eliminar el proyecto. Por favor, inténtalo nuevamente."
+        );
+      }
     }
   });
   header.appendChild(deleteTodoBtn);
@@ -32,7 +45,7 @@ const projectPage = (project) => {
   const todoList = document.createElement("div");
 
   project.todos.forEach((todo) => {
-    const todoCardElement = todoCard(todo);
+    const todoCardElement = todoCard(todo,project);
 
     const buttonGroup = document.createElement("div");
     buttonGroup.classList.add("btn-group");
@@ -56,12 +69,19 @@ const projectPage = (project) => {
     const deleteBtn = createDeleteBtn();
     deleteBtn.classList.remove("btn-danger");
     deleteBtn.classList.add("btn-outline-primary", "btn-sm");
-    deleteBtn.addEventListener("click", () => {
+    deleteBtn.addEventListener("click", async () => {
       event.stopPropagation(); // Stop the click event from propagating to the todoCardElement
       const todoIndex = project.todos.indexOf(todo);
-      if (todoIndex !== -1) project.todos.splice(todoIndex, 1);
-
-      todoList.removeChild(todoCardElement);
+      if (todoIndex !== -1) {
+        const deleted = await deleteTodoOnBackend(project.id, todo.id);
+        if (deleted) {
+          project.todos.splice(todoIndex, 1);
+          todoList.removeChild(todoCardElement);
+        } else {
+          // Manejar el caso en el que no se pudo eliminar el todo
+          console.log("Error al eliminar el todo");
+        }
+      }
     });
 
     buttonGroup.appendChild(detailBtn);

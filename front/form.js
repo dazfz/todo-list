@@ -1,5 +1,12 @@
 import { Todo, Project } from "./classes.js";
-import { showAllProjects, mod } from "./index.js";
+import {
+  showAllProjects,
+  mod,
+  createNewTodoOnBackend,
+  updateTodoOnBackend,
+  createNewProjectOnBackend,
+  BASE_URL,
+} from "./index.js";
 import { projectPage } from "./project.js";
 import { todoWindow } from "./todo.js";
 import { createSubmitBtn } from "./buttons.js";
@@ -11,6 +18,10 @@ const openTodoForm = (project, todo) => {
   }
 
   const form = document.createElement("form");
+  form.method = todo ? "PUT" : "POST"; // Establecer el método como PUT si es una actualización, o POST si es un nuevo todo
+  form.action = todo
+    ? `${BASE_URL}/api/todos/${todo.id}`
+    : `${BASE_URL}/api/projects/${project.id}/todos`; // Establecer la URL adecuada para la acción del formulario
 
   const titleLbl = document.createElement("label");
   titleLbl.classList.add("form-label", "form-control-lg");
@@ -23,7 +34,7 @@ const openTodoForm = (project, todo) => {
   form.appendChild(titleLbl);
 
   const descLbl = document.createElement("label");
-  descLbl.classList.add("form-label","form-control-lg");
+  descLbl.classList.add("form-label", "form-control-lg");
   descLbl.textContent = "Description:";
   const descInpt = document.createElement("textarea");
   descInpt.classList.add("form-control", "form-control-lg");
@@ -33,7 +44,7 @@ const openTodoForm = (project, todo) => {
 
   const dueDateLbl = document.createElement("label");
   dueDateLbl.textContent = "Due Date:";
-  dueDateLbl.classList.add("form-label","form-control-lg");
+  dueDateLbl.classList.add("form-label", "form-control-lg");
   const dueDateInpt = document.createElement("input");
   dueDateInpt.classList.add("form-control", "form-control-lg");
   dueDateInpt.type = "date";
@@ -43,11 +54,11 @@ const openTodoForm = (project, todo) => {
 
   // Dropdown
   const priorityLbl = document.createElement("label");
-  priorityLbl.classList.add("form-label","form-control-lg");
+  priorityLbl.classList.add("form-label", "form-control-lg");
   priorityLbl.textContent = "Priority:";
   const prioritySelect = document.createElement("select");
   prioritySelect.classList.add("form-select", "form-select-lg");
-  
+
   const lowOption = document.createElement("option");
   lowOption.value = "low";
   lowOption.textContent = "Low";
@@ -69,13 +80,14 @@ const openTodoForm = (project, todo) => {
   form.appendChild(submitBtn);
 
   // Handle form submission
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (todo) {
       todo.title = titleInpt.value;
       todo.description = descInpt.value;
       todo.dueDate = dueDateInpt.value;
       todo.priority = prioritySelect.value;
+      await updateTodoOnBackend(todo, project);
       todoWindow(project, todo);
     } else {
       // Creating a new todo
@@ -86,6 +98,7 @@ const openTodoForm = (project, todo) => {
         prioritySelect.value
       );
       project.todos.push(newTodo);
+      await createNewTodoOnBackend(newTodo, project);
     }
     projectPage(project);
   });
@@ -96,8 +109,10 @@ const openTodoForm = (project, todo) => {
   body.append(form);
 };
 
-const openProjectForm = (projects) => {
+const openProjectForm = async (projects) => {
   const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `${BASE_URL}/api/projects`;
 
   const titleLbl = document.createElement("label");
   titleLbl.classList.add("form-label", "form-control-lg");
@@ -111,12 +126,14 @@ const openProjectForm = (projects) => {
   const submitBtn = createSubmitBtn();
   form.appendChild(submitBtn);
 
-  // Handle form submission
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const newProject = new Project(titleInpt.value);
-    projects.push(newProject);
-    showAllProjects(projects);
+    const addedProject = await createNewProjectOnBackend(newProject);
+    if (addedProject) {
+      projects.push(addedProject);
+      showAllProjects(projects);
+    }
   });
 
   const title = mod.querySelector(".modal-title");
