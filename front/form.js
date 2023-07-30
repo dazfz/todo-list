@@ -1,12 +1,11 @@
 import { Todo, Project } from "./classes.js";
+import { showAllProjects } from "./projects.js";
+import { mod } from "./app.js";
 import {
-  showAllProjects,
-  mod,
-  createNewTodoOnBackend,
-  updateTodoOnBackend,
-  createNewProjectOnBackend,
-  BASE_URL,
-} from "./index.js";
+  createTodoBackend,
+  updateTodoBackend,
+  createProjectBackend,
+} from "./api.js";
 import { projectPage } from "./project.js";
 import { todoWindow } from "./todo.js";
 import { createSubmitBtn } from "./buttons.js";
@@ -18,10 +17,6 @@ const openTodoForm = (project, todo) => {
   }
 
   const form = document.createElement("form");
-  form.method = todo ? "PUT" : "POST"; // Establecer el método como PUT si es una actualización, o POST si es un nuevo todo
-  form.action = todo
-    ? `${BASE_URL}/api/todos/${todo.id}`
-    : `${BASE_URL}/api/projects/${project.id}/todos`; // Establecer la URL adecuada para la acción del formulario
 
   const titleLbl = document.createElement("label");
   titleLbl.classList.add("form-label", "form-control-lg");
@@ -87,7 +82,7 @@ const openTodoForm = (project, todo) => {
       todo.description = descInpt.value;
       todo.dueDate = dueDateInpt.value;
       todo.priority = prioritySelect.value;
-      await updateTodoOnBackend(todo, project);
+      await updateTodoBackend(todo, project.id);
       todoWindow(project, todo);
     } else {
       // Creating a new todo
@@ -98,7 +93,7 @@ const openTodoForm = (project, todo) => {
         prioritySelect.value
       );
       project.todos.push(newTodo);
-      await createNewTodoOnBackend(newTodo, project);
+      await createTodoBackend(newTodo, project.id);
     }
     projectPage(project);
   });
@@ -111,8 +106,6 @@ const openTodoForm = (project, todo) => {
 
 const openProjectForm = async (projects) => {
   const form = document.createElement("form");
-  form.method = "POST";
-  form.action = `${BASE_URL}/api/projects`;
 
   const titleLbl = document.createElement("label");
   titleLbl.classList.add("form-label", "form-control-lg");
@@ -129,13 +122,12 @@ const openProjectForm = async (projects) => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const newProject = new Project(titleInpt.value);
-    const addedProject = await createNewProjectOnBackend(newProject);
+    const addedProject = await createProjectBackend(newProject);
     if (addedProject) {
       projects.push(addedProject);
       showAllProjects(projects);
     }
   });
-
   const title = mod.querySelector(".modal-title");
   title.textContent = "New Project";
   const body = mod.querySelector(".modal-body");

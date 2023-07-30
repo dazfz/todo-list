@@ -1,12 +1,7 @@
 import { todoCard, todoWindow } from "./todo.js";
 import { openTodoForm } from "./form.js";
-import {
-  projects,
-  showAllProjects,
-  nullCurrent,
-  deleteProjectOnBackend,
-  deleteTodoOnBackend,
-} from "./index.js";
+import { projects, showAllProjects, nullCurrent } from "./projects.js";
+import { deleteProjectBackend, deleteTodoBackend } from "./api.js";
 import { createNewBtn, createDeleteBtn } from "./buttons.js";
 
 const projectPage = (project) => {
@@ -28,16 +23,12 @@ const projectPage = (project) => {
   deleteTodoBtn.addEventListener("click", async () => {
     const projectIndex = projects.indexOf(project);
     if (projectIndex !== -1) {
-      const deleted = await deleteProjectOnBackend(project.id);
+      const deleted = await deleteProjectBackend(project.id);
       if (deleted) {
         projects.splice(projectIndex, 1);
         nullCurrent();
         showAllProjects(projects);
-      } else {
-        alert(
-          "No se pudo eliminar el proyecto. Por favor, inténtalo nuevamente."
-        );
-      }
+      } else alert("No se pudo eliminar el proyecto.");
     }
   });
   header.appendChild(deleteTodoBtn);
@@ -45,7 +36,7 @@ const projectPage = (project) => {
   const todoList = document.createElement("div");
 
   project.todos.forEach((todo) => {
-    const todoCardElement = todoCard(todo,project);
+    const todoCardElement = todoCard(todo, project);
 
     const buttonGroup = document.createElement("div");
     buttonGroup.classList.add("btn-group");
@@ -73,14 +64,11 @@ const projectPage = (project) => {
       event.stopPropagation(); // Stop the click event from propagating to the todoCardElement
       const todoIndex = project.todos.indexOf(todo);
       if (todoIndex !== -1) {
-        const deleted = await deleteTodoOnBackend(project.id, todo.id);
+        const deleted = await deleteTodoBackend(todo.id, project.id);
         if (deleted) {
           project.todos.splice(todoIndex, 1);
           todoList.removeChild(todoCardElement);
-        } else {
-          // Manejar el caso en el que no se pudo eliminar el todo
-          console.log("Error al eliminar el todo");
-        }
+        } else console.log("Error al eliminar to-do");
       }
     });
 
