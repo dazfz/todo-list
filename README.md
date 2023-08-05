@@ -1,10 +1,12 @@
 # Todo list
 
+https://todo-list-dev.fl0.io/
+
 ![My Skills](https://skillicons.dev/icons?i=js,html,css,bootstrap,nodejs,express,sqlite)
 
 ## Instrucciones
 
-### NodeJS
+### Node.js
 
 1. Instalar las dependencias con el siguiente comando: `npm install`
 2. Iniciar la aplicación con el siguiente comando: `npm start`
