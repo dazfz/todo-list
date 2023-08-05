@@ -1,8 +1,6 @@
-const BASE_URL = "http://localhost:3000";
-
 async function fetchProjects() {
   try {
-    const response = await fetch(`${BASE_URL}/api/projects`);
+    const response = await fetch(`/api/projects`);
     if (!response.ok)
       throw new Error("No se pudo obtener la lista de proyectos");
     return await response.json();
@@ -15,7 +13,7 @@ async function fetchProjects() {
 // Función para agregar un nuevo proyecto al backend
 async function createProjectBackend(newProject) {
   try {
-    const response = await fetch(`${BASE_URL}/api/projects`, {
+    const response = await fetch(`/api/projects`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +30,7 @@ async function createProjectBackend(newProject) {
 
 async function deleteProjectBackend(projectId) {
   try {
-    const response = await fetch(`${BASE_URL}/api/projects/${projectId}`, {
+    const response = await fetch(`/api/projects/${projectId}`, {
       method: "DELETE",
     });
     if (!response.ok) throw new Error("No se pudo eliminar el proyecto");
@@ -46,7 +44,7 @@ async function deleteProjectBackend(projectId) {
 async function createTodoBackend(newTodo, projectId) {
   try {
     const response = await fetch(
-      `${BASE_URL}/api/projects/${projectId}/todos`,
+      `/api/projects/${projectId}/todos`,
       {
         method: "POST",
         headers: {
@@ -66,7 +64,7 @@ async function createTodoBackend(newTodo, projectId) {
 async function updateTodoBackend(todo, projectId) {
   try {
     const response = await fetch(
-      `${BASE_URL}/api/projects/${projectId}/todos/${todo.id}`,
+      `/api/projects/${projectId}/todos/${todo.id}`,
       {
         method: "PUT",
         headers: {
@@ -86,7 +84,7 @@ async function updateTodoBackend(todo, projectId) {
 async function deleteTodoBackend(todoId, projectId) {
   try {
     const response = await fetch(
-      `${BASE_URL}/api/projects/${projectId}/todos/${todoId}`,
+      `/api/projects/${projectId}/todos/${todoId}`,
       {
         method: "DELETE",
       }
@@ -100,7 +98,6 @@ async function deleteTodoBackend(todoId, projectId) {
 }
 
 export {
-  BASE_URL,
   fetchProjects,
   createProjectBackend,
   deleteProjectBackend,
