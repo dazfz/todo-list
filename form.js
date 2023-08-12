@@ -1,11 +1,6 @@
 import { Todo, Project } from "./classes.js";
 import { showAllProjects } from "./projects.js";
 import { mod } from "./app.js";
-import {
-  createTodoBackend,
-  updateTodoBackend,
-  createProjectBackend,
-} from "./api.js";
 import { projectPage } from "./project.js";
 import { todoWindow } from "./todo.js";
 import { createSubmitBtn } from "./buttons.js";
@@ -75,14 +70,13 @@ const openTodoForm = (project, todo) => {
   form.appendChild(submitBtn);
 
   // Handle form submission
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (todo) {
       todo.title = titleInpt.value;
       todo.description = descInpt.value;
       todo.dueDate = dueDateInpt.value;
       todo.priority = prioritySelect.value;
-      await updateTodoBackend(todo, project.id);
       todoWindow(project, todo);
     } else {
       // Creating a new todo
@@ -93,7 +87,6 @@ const openTodoForm = (project, todo) => {
         prioritySelect.value
       );
       project.todos.push(newTodo);
-      await createTodoBackend(newTodo, project.id);
     }
     projectPage(project);
   });
@@ -119,14 +112,11 @@ const openProjectForm = async (projects) => {
   const submitBtn = createSubmitBtn();
   form.appendChild(submitBtn);
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
     const newProject = new Project(titleInpt.value);
-    const addedProject = await createProjectBackend(newProject);
-    if (addedProject) {
-      projects.push(addedProject);
-      showAllProjects(projects);
-    }
+    projects.push(newProject);
+    showAllProjects(projects);
   });
   const title = mod.querySelector(".modal-title");
   title.textContent = "New Project";

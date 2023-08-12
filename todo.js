@@ -1,7 +1,6 @@
 // Todo card, it exists in a project, contains, only essential info
 import { openTodoForm } from "./form.js";
 import { mod } from "./app.js";
-import { updateTodoBackend } from "./api.js";
 
 const todoCard = (todo, project) => {
   const card = document.createElement("div");
@@ -33,17 +32,10 @@ const todoCard = (todo, project) => {
   checkbox.type = "checkbox";
   checkbox.classList.add("form-check-input");
   checkbox.checked = todo.checked;
-  checkbox.addEventListener("change", async (event) => {
-    let prev;
-    if (todo) prev = todo.checked;
-    todo.checked = event.target.checked;
-    try {
-      await updateTodoBackend(todo, project.id);
-    } catch (error) {
-      todo.checked = prev;
-      console.error("Error:", error.message);
-    }
-  });
+  checkbox.addEventListener(
+    "change",
+    (event) => (todo.checked = event.target.checked)
+  );
   body.appendChild(checkbox);
 
   card.appendChild(body);

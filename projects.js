@@ -1,15 +1,20 @@
-import { fetchProjects, createProjectBackend } from "./api.js";
 import { Project } from "./classes.js";
 import { projectPage, projectCard } from "./project.js";
 import { createNewBtn } from "./buttons.js";
 import { openProjectForm } from "./form.js";
 
-var projects = await fetchProjects();
+window.addEventListener("beforeunload", function () {
+  localStorage.setItem("projects", JSON.stringify(projects));
+});
+window.addEventListener("unload", function () {
+  localStorage.setItem("projects", JSON.stringify(projects));
+});
+
+var projects = JSON.parse(localStorage.getItem("projects")) || [];
 
 if (projects.length === 0) {
   const project = new Project("My Project");
-  const addedProject = await createProjectBackend(project);
-  if (addedProject) projects.push(addedProject);
+  projects.push(project);
 }
 var current = projects[0];
 
@@ -38,13 +43,3 @@ const showAllProjects = (projects) => {
   main.appendChild(addButton);
 };
 export { projects, showAllProjects, current, nullCurrent };
-
-// Web Storage
-// window.addEventListener("beforeunload", function () {
-//   localStorage.setItem("projects", JSON.stringify(projects));
-// });
-// window.addEventListener("unload", function () {
-//   localStorage.setItem("projects", JSON.stringify(projects));
-// });
-
-// var projects = JSON.parse(localStorage.getItem("projects")) || [];

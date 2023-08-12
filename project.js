@@ -1,7 +1,6 @@
 import { todoCard, todoWindow } from "./todo.js";
 import { openTodoForm } from "./form.js";
 import { projects, showAllProjects, nullCurrent } from "./projects.js";
-import { deleteProjectBackend, deleteTodoBackend } from "./api.js";
 import { createNewBtn, createDeleteBtn } from "./buttons.js";
 
 const projectPage = (project) => {
@@ -20,15 +19,12 @@ const projectPage = (project) => {
   const deleteTodoBtn = document.createElement("button");
   deleteTodoBtn.innerHTML = "Delete Project";
   deleteTodoBtn.classList.add("btn", "btn-danger");
-  deleteTodoBtn.addEventListener("click", async () => {
+  deleteTodoBtn.addEventListener("click", () => {
     const projectIndex = projects.indexOf(project);
     if (projectIndex !== -1) {
-      const deleted = await deleteProjectBackend(project.id);
-      if (deleted) {
-        projects.splice(projectIndex, 1);
-        nullCurrent();
-        showAllProjects(projects);
-      } else alert("No se pudo eliminar el proyecto.");
+      projects.splice(projectIndex, 1);
+      nullCurrent();
+      showAllProjects(projects);
     }
   });
   header.appendChild(deleteTodoBtn);
@@ -60,16 +56,12 @@ const projectPage = (project) => {
     const deleteBtn = createDeleteBtn();
     deleteBtn.classList.remove("btn-danger");
     deleteBtn.classList.add("btn-outline-primary", "btn-sm");
-    deleteBtn.addEventListener("click", async () => {
+    deleteBtn.addEventListener("click", () => {
       event.stopPropagation(); // Stop the click event from propagating to the todoCardElement
       const todoIndex = project.todos.indexOf(todo);
-      if (todoIndex !== -1) {
-        const deleted = await deleteTodoBackend(todo.id, project.id);
-        if (deleted) {
-          project.todos.splice(todoIndex, 1);
-          todoList.removeChild(todoCardElement);
-        } else console.log("Error al eliminar to-do");
-      }
+      if (todoIndex !== -1) project.todos.splice(todoIndex, 1);
+
+      todoList.removeChild(todoCardElement);
     });
 
     buttonGroup.appendChild(detailBtn);
