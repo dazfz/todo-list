@@ -42,6 +42,7 @@ async function deleteProjectBackend(projectId) {
 }
 
 async function createTodoBackend(newTodo, projectId) {
+  console.log(projectId)
   try {
     const response = await fetch(
       `/api/projects/${projectId}/todos`,
@@ -64,7 +65,7 @@ async function createTodoBackend(newTodo, projectId) {
 async function updateTodoBackend(todo, projectId) {
   try {
     const response = await fetch(
-      `/api/projects/${projectId}/todos/${todo.id}`,
+      `/api/projects/${projectId}/todos/${todo._id}`,
       {
         method: "PUT",
         headers: {

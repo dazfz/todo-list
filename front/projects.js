@@ -4,18 +4,6 @@ import { projectPage, projectCard } from "./project.js";
 import { createNewBtn } from "./buttons.js";
 import { openProjectForm } from "./form.js";
 
-var projects = await fetchProjects();
-
-if (projects.length === 0) {
-  const project = new Project("My Project");
-  const addedProject = await createProjectBackend(project);
-  if (addedProject) projects.push(addedProject);
-}
-var current = projects[0];
-
-// asignarle null a current para que go back no vaya a un project anterior borrado
-const nullCurrent = () => (current = null);
-
 const showAllProjects = (projects) => {
   const main = document.querySelector("main");
   main.innerHTML = "";
@@ -37,14 +25,16 @@ const showAllProjects = (projects) => {
   addButton.addEventListener("click", () => openProjectForm(projects));
   main.appendChild(addButton);
 };
+
+// asignarle null a current para que go back no vaya a un project anterior borrado
+const nullCurrent = () => (current = null);
+
+var projects = await fetchProjects();
+
+if (projects.length === 0) {
+  const project = new Project("My Project");
+  const addedProject = await createProjectBackend(project);
+  if (addedProject) projects.push(addedProject);
+}
+var current = projects[0];
 export { projects, showAllProjects, current, nullCurrent };
-
-// Web Storage
-// window.addEventListener("beforeunload", function () {
-//   localStorage.setItem("projects", JSON.stringify(projects));
-// });
-// window.addEventListener("unload", function () {
-//   localStorage.setItem("projects", JSON.stringify(projects));
-// });
-
-// var projects = JSON.parse(localStorage.getItem("projects")) || [];

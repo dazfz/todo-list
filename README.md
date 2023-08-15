@@ -2,7 +2,7 @@
 
 https://todo-list-dev.fl0.io/
 
-![My Skills](https://skillicons.dev/icons?i=js,html,css,bootstrap,nodejs,express,sqlite)
+![My Skills](https://skillicons.dev/icons?i=js,html,css,bootstrap,nodejs,express,mongodb)
 
 ## Instrucciones
 

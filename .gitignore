@@ -1,7 +1,2 @@
-# Ignorar directorio node_modules y su contenido
 node_modules/
-
 package-lock.json
-
-# Ignorar el archivo de base de datos (todos.db)
-todos.db

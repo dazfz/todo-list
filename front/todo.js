@@ -1,8 +1,8 @@
-// Todo card, it exists in a project, contains, only essential info
 import { openTodoForm } from "./form.js";
 import { mod } from "./app.js";
 import { updateTodoBackend } from "./api.js";
 
+// Todo card, it exists in a project, contains, only essential info
 const todoCard = (todo, project) => {
   const card = document.createElement("div");
   card.classList.add("card", "my-3");
@@ -38,7 +38,7 @@ const todoCard = (todo, project) => {
     if (todo) prev = todo.checked;
     todo.checked = event.target.checked;
     try {
-      await updateTodoBackend(todo, project.id);
+      await updateTodoBackend(todo, project._id);
     } catch (error) {
       todo.checked = prev;
       console.error("Error:", error.message);

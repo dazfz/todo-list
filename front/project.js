@@ -23,7 +23,7 @@ const projectPage = (project) => {
   deleteTodoBtn.addEventListener("click", async () => {
     const projectIndex = projects.indexOf(project);
     if (projectIndex !== -1) {
-      const deleted = await deleteProjectBackend(project.id);
+      const deleted = await deleteProjectBackend(project._id);
       if (deleted) {
         projects.splice(projectIndex, 1);
         nullCurrent();
@@ -64,7 +64,7 @@ const projectPage = (project) => {
       event.stopPropagation(); // Stop the click event from propagating to the todoCardElement
       const todoIndex = project.todos.indexOf(todo);
       if (todoIndex !== -1) {
-        const deleted = await deleteTodoBackend(todo.id, project.id);
+        const deleted = await deleteTodoBackend(todo._id, project._id);
         if (deleted) {
           project.todos.splice(todoIndex, 1);
           todoList.removeChild(todoCardElement);

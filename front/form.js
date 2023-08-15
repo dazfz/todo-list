@@ -82,7 +82,7 @@ const openTodoForm = (project, todo) => {
       todo.description = descInpt.value;
       todo.dueDate = dueDateInpt.value;
       todo.priority = prioritySelect.value;
-      await updateTodoBackend(todo, project.id);
+      await updateTodoBackend(todo, project._id);
       todoWindow(project, todo);
     } else {
       // Creating a new todo
@@ -92,8 +92,8 @@ const openTodoForm = (project, todo) => {
         dueDateInpt.value,
         prioritySelect.value
       );
-      project.todos.push(newTodo);
-      await createTodoBackend(newTodo, project.id);
+      const addedTodo = await createTodoBackend(newTodo, project._id);
+      if (addedTodo) project.todos.push(addedTodo);
     }
     projectPage(project);
   });
