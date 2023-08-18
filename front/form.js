@@ -11,11 +11,6 @@ import { todoWindow } from "./todo.js";
 import { createSubmitBtn } from "./buttons.js";
 
 const openTodoForm = (project, todo) => {
-  const modalBody = document.querySelector(".modal-body");
-  while (modalBody.firstChild) {
-    modalBody.removeChild(modalBody.firstChild);
-  }
-
   const form = document.createElement("form");
 
   const titleLbl = document.createElement("label");
@@ -93,7 +88,10 @@ const openTodoForm = (project, todo) => {
         prioritySelect.value
       );
       const addedTodo = await createTodoBackend(newTodo, project._id);
-      if (addedTodo) project.todos.push(addedTodo);
+      if (addedTodo) {
+        console.log(addedTodo);
+        project.todos.push(addedTodo);
+      }
     }
     projectPage(project);
   });
@@ -124,6 +122,7 @@ const openProjectForm = async (projects) => {
     const newProject = new Project(titleInpt.value);
     const addedProject = await createProjectBackend(newProject);
     if (addedProject) {
+      console.log(addedProject);
       projects.push(addedProject);
       showAllProjects(projects);
     }

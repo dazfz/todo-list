@@ -8,6 +8,15 @@ const showAllProjects = (projects) => {
   const main = document.querySelector("main");
   main.innerHTML = "";
 
+  const header = document.createElement("div");
+  header.classList.add("project-header", "d-flex", "justify-content-center");
+  const title = document.createElement("h2");
+  title.textContent = "Projects";
+  title.style.maxWidth = "60%";
+  title.classList.add("text-truncate");
+  header.appendChild(title);
+  main.appendChild(header);
+
   const projectList = document.createElement("ul");
   projectList.classList.add("list-group");
   projects.forEach((project) => {
@@ -28,13 +37,16 @@ const showAllProjects = (projects) => {
 
 // asignarle null a current para que go back no vaya a un project anterior borrado
 const nullCurrent = () => (current = null);
+var current = null;
 
-var projects = await fetchProjects();
+let projects =[] //= await fetchProjects();
+const getProjects = (p) => {
+  projects = p;
+};
 
-if (projects.length === 0) {
-  const project = new Project("My Project");
-  const addedProject = await createProjectBackend(project);
-  if (addedProject) projects.push(addedProject);
-}
-var current = projects[0];
-export { projects, showAllProjects, current, nullCurrent };
+// if (projects.length === 0) {
+//   const project = new Project("My Project");
+//   const addedProject = await createProjectBackend(project);
+//   if (addedProject) projects.push(addedProject);
+// }
+export { projects, showAllProjects, current, nullCurrent ,getProjects};

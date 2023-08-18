@@ -2,9 +2,10 @@ const { ObjectId } = require("mongodb");
 const { getDb } = require("../db");
 
 const getAllProjects = async (req, res) => {
+  const db = getDb();
+  const userId = new ObjectId(req.user._id);
   try {
-    const db = getDb();
-    const projects = await db.collection("projects").find().toArray();
+    const projects = await db.collection("projects").find({ userId }).toArray();
 
     for (const project of projects) {
       const todos = await db
@@ -24,49 +25,26 @@ const getAllProjects = async (req, res) => {
 const createProject = async (req, res) => {
   const db = getDb();
   const projectName = req.body.name;
-
+  const userId = new ObjectId(req.user._id);
   try {
     const result = await db
       .collection("projects")
-      .insertOne({ name: projectName });
+      .insertOne({ name: projectName, userId: userId });
     const projectId = result.insertedId;
-
-    res.json({ _id: projectId, name: projectName, todos: [] });
+    res.json({ _id: projectId, name: projectName, todos: [], userId: userId });
   } catch (error) {
     res.status(500).json({ error: "Error al agregar el proyecto" });
-  }
-};
-
-const getProjectById = async (req, res) => {
-  const db = getDb();
-  const projectId = req.params.id;
-
-  try {
-    const project = await db
-      .collection("projects")
-      .findOne({ _id: new ObjectId(projectId) });
-
-    if (project) {
-      const todos = await db
-        .collection("todos")
-        .find({ projectId: new ObjectId(projectId) })
-        .toArray();
-      project.todos = todos;
-      res.json(project);
-    } else {
-      res.status(404).json({ error: "Proyecto no encontrado" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: "Error al obtener el proyecto" });
   }
 };
 
 const deleteProject = async (req, res) => {
   const db = getDb();
   const projectId = req.params.id;
-
+  const userId = new ObjectId(req.user._id);
   try {
-    await db.collection("projects").deleteOne({ _id: new ObjectId(projectId) });
+    await db
+      .collection("projects")
+      .deleteOne({ _id: new ObjectId(projectId), userId });
     await db
       .collection("todos")
       .deleteMany({ projectId: new ObjectId(projectId) });
@@ -80,6 +58,5 @@ const deleteProject = async (req, res) => {
 module.exports = {
   getAllProjects,
   createProject,
-  getProjectById,
   deleteProject,
 };
