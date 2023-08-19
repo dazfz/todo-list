@@ -1,6 +1,6 @@
 import { openTodoForm } from "./form.js";
 import { mod } from "./app.js";
-import { updateTodoBackend } from "./api.js";
+import { updateTodoBackend } from "./apiTodos.js";
 
 // Todo card, it exists in a project, contains, only essential info
 const todoCard = (todo, project) => {

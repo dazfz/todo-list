@@ -1,11 +1,8 @@
 import { Todo, Project } from "./classes.js";
 import { showAllProjects } from "./projects.js";
 import { mod } from "./app.js";
-import {
-  createTodoBackend,
-  updateTodoBackend,
-  createProjectBackend,
-} from "./api.js";
+import { createProjectBackend } from "./apiProjects.js";
+import { createTodoBackend, updateTodoBackend } from "./apiTodos.js";
 import { projectPage } from "./project.js";
 import { todoWindow } from "./todo.js";
 import { createSubmitBtn } from "./buttons.js";

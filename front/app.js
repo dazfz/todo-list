@@ -8,6 +8,7 @@ const showAllBtn = document.querySelector("#showAll");
 const accBtn = document.querySelector("#account");
 const mod = modal();
 let currentUser = null;
+
 // Evento para regresar a la página de proyecto actual o no hacer nada
 goBackBtn.addEventListener("click", () =>
   current !== null ? projectPage(current) : ""

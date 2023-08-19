@@ -1,5 +1,3 @@
-import { fetchProjects, createProjectBackend } from "./api.js";
-import { Project } from "./classes.js";
 import { projectPage, projectCard } from "./project.js";
 import { createNewBtn } from "./buttons.js";
 import { openProjectForm } from "./form.js";
@@ -39,14 +37,9 @@ const showAllProjects = (projects) => {
 const nullCurrent = () => (current = null);
 var current = null;
 
-let projects =[] //= await fetchProjects();
+let projects = [];
 const getProjects = (p) => {
   projects = p;
 };
 
-// if (projects.length === 0) {
-//   const project = new Project("My Project");
-//   const addedProject = await createProjectBackend(project);
-//   if (addedProject) projects.push(addedProject);
-// }
-export { projects, showAllProjects, current, nullCurrent ,getProjects};
+export { projects, showAllProjects, current, nullCurrent, getProjects };

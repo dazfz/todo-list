@@ -1,6 +1,7 @@
 import { updateProfileInfo } from "./app.js";
-import { getProjects, showAllProjects } from "./projects.js";
-import { fetchProjects, loginBE, signupBE, logoutBE } from "./api.js";
+import { getProjects, showAllProjects,nullCurrent } from "./projects.js";
+import { fetchProjects } from "./apiProjects.js";
+import { loginBE, signupBE, logoutBE } from "./apiAuth.js";
 import { createSubmitBtn } from "./buttons.js";
 
 const createInputField = (labelText, inputType, inputName) => {
@@ -93,7 +94,6 @@ const createForm = (titleText, submitButtonText) => {
       if (res) {
         updateProfileInfo(res);
         const p = await fetchProjects();
-        console.log(p)
         getProjects(p);
         showAllProjects(p);
       }
@@ -176,8 +176,8 @@ const profile = (user) => {
   profileInfo.appendChild(username);
   profileInfo.appendChild(email);
   const passwordBtn = document.createElement("button");
-  passwordBtn.textContent = "Cambiar Contraseña";
-  passwordBtn.classList.add("btn", "btn-primary", "my-2");
+  passwordBtn.textContent = "Change password";
+  passwordBtn.classList.add("btn", "btn-primary", "mx-2");
   passwordBtn.addEventListener("click", () => {
     // Acciones para cambiar la contraseña
   });
@@ -185,11 +185,13 @@ const profile = (user) => {
 
   const logoutBtn = document.createElement("button");
   logoutBtn.textContent = "Log out";
-  logoutBtn.classList.add("btn", "btn-danger");
+  logoutBtn.classList.add("btn", "btn-primary");
   logoutBtn.addEventListener("click", async () => {
     const res = await logoutBE();
     if (res) {
       updateProfileInfo(null);
+      getProjects(null);
+      nullCurrent();
       login();
     }
   });

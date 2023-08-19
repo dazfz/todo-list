@@ -1,7 +1,8 @@
 import { todoCard, todoWindow } from "./todo.js";
 import { openTodoForm } from "./form.js";
 import { projects, showAllProjects, nullCurrent } from "./projects.js";
-import { deleteProjectBackend, deleteTodoBackend } from "./api.js";
+import { deleteProjectBackend } from "./apiProjects.js";
+import { deleteTodoBackend } from "./apiTodos.js";
 import { createNewBtn, createDeleteBtn } from "./buttons.js";
 
 const projectPage = (project) => {
